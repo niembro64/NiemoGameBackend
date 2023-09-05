@@ -21,11 +21,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('send-coordinates', (data) => {
-    // console.log('Received coordinates:', data);
     deviceCoordinates[data.deviceId] = data.positions;
-    // deviceCoordinates[socket.id] = data;
-
-    // Broadcast the entire set of coordinates to all clients
 
     console.log('Broadcasting coordinates:', deviceCoordinates);
     io.emit('receive-coordinates', deviceCoordinates);
