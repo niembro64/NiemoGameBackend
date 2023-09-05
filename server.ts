@@ -11,11 +11,22 @@ const deviceCoordinates: { [socketId: string]: { x: number; y: number } } = {};
 io.on('connection', (socket) => {
   console.log('a user connected', socket.id);
 
+  socket.on('register-device', (deviceId) => {
+    console.log('Device ID:', deviceId);
+    // Store the device ID, associate it with the socket.id if needed
+    deviceCoordinates[deviceId] = {
+      x: 0,
+      y: 0,
+    };
+  });
+
   socket.on('send-coordinates', (data) => {
-    console.log('Received coordinates:', data);
+    // console.log('Received coordinates:', data);
     deviceCoordinates[socket.id] = data;
 
     // Broadcast the entire set of coordinates to all clients
+
+    console.log('Broadcasting coordinates:', deviceCoordinates);
     io.emit('receive-coordinates', deviceCoordinates);
   });
 
@@ -37,6 +48,7 @@ io.on('connection', (socket) => {
     console.log('Error:', err);
   });
 });
+
 httpServer.listen(3000, () => {
   console.log('listening on *:3000');
 });
