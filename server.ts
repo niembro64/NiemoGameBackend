@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
     console.log('user disconnected', socket.id);
 
     // Remove this device's coordinates
-    delete deviceCoordinates[socket.id];
+    // delete deviceCoordinates[socket.id];
 
     // Broadcast the updated set of coordinates to all clients
     io.emit('receive-coordinates', deviceCoordinates);
